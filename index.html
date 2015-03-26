@@ -5,16 +5,10 @@
   <title>Titre de la page</title>
   <link rel="stylesheet" href="suites.css">
   <script src="http://cdnjs.cloudflare.com/ajax/libs/vue/0.10.6/vue.min.js"></script>
-  <!--<script src="http://d2v52k3cl9vedd.cloudfront.net/plangular/2.0-beta-1/v-plangular.min.js"></script>-->
   <script src="v-plangular.js"></script>
-  <!--<script src="ng-plangular.js"></script>-->
 </head>
 <body>
 
-
-<!--<div id="container" v-repeat="tags">
-	<p>{{$value}}</p>
-</div>-->
 <header class="line">
 	<div>
 		<a id="soundcloud" href="https://soundcloud.com/s8es" target="_blank" alt="All song are provide by soundcloud"></a>
@@ -73,117 +67,9 @@
 	    </span>
 	  </div>
 	</div>
-
-
-
-
-
-	<!--<div class="playlist" v-component="plangular" v-src="'https://soundcloud.com/s8es/sets/exfloration'">
-		{{player.playlistIndex}}
-		<h1>{{ user.username }}</h1>
-	    <h2 class="">{{ title || '&nbsp;' }}</h2>
-	    
-	    <div class="line">
-		    <div class="controls" class="">
-		        <button class="button-icon" v-on="click: previous()">
-		          <svg v-plangular-icon="'previous'"></svg>
-		        </button>
-
-		        <button class="h2 button-icon" v-on="click: playPause(player.playlistIndex)">
-		          <svg v-if="player.tracks[player.i] != track || !player.playing" v-plangular-icon="'play'"></svg>
-		          <svg v-if="player.tracks[player.i] == track && player.playing" v-plangular-icon="'pause'"></svg>
-		        </button>
-
-		        <button class="button-icon" v-on="click: next()">
-		          <svg v-plangular-icon="'next'"></svg>
-		        </button>
-
-		    </div>
-
-		    <small class="duration">{{ currentTime | prettyTime }} - {{ duration | prettyTime }}</small>
-		</div>
-	    
-	    <div class="">
-	        <div class="px1">
-	          <progress value="{{ currentTime / duration || 0 }}"
-	            v-on="click: seek($event)">
-	            {{ currentTime / duration }}
-	          </progress>
-	        </div>
-	    </div>
-	  <div class="track" v-repeat="t : tracks" v-class="player.currentTrack == t ? 'current' : ''">
-	    <a href="#" class="block p1 nav-item"
-	      v-on="click: playPause($index)">
-	      <span class="mr1">{{ $index }}.</span>
-	      {{ t.user.username }} - {{ t.title }}
-	    </a>
-	  </div>
-	</div>
-	<div class="playlist" v-component="plangular" v-src="'https://soundcloud.com/s8es/sets/pool-in'">
-		{{player.playlistIndex}}
-		<h1>{{ user.username }}</h1>
-	    <h2 class="">{{ title || '&nbsp;' }}</h2>
-	    
-	    <div class="line">
-		    <div class="controls" class="">
-		        <button class="button-icon" v-on="click: previous()">
-		          <svg v-plangular-icon="'previous'"></svg>
-		        </button>
-
-		        <button class="h2 button-icon" v-on="click: playPause(player.playlistIndex)">
-		          <svg v-if="player.tracks[player.i] != track || !player.playing" v-plangular-icon="'play'"></svg>
-		          <svg v-if="player.tracks[player.i] == track && player.playing" v-plangular-icon="'pause'"></svg>
-		        </button>
-
-		        <button class="button-icon" v-on="click: next()">
-		          <svg v-plangular-icon="'next'"></svg>
-		        </button>
-
-		    </div>
-
-		    <small class="duration">{{ currentTime | prettyTime }} - {{ duration | prettyTime }}</small>
-		</div>
-	    
-	    <div class="">
-	        <div class="px1">
-	          <progress value="{{ currentTime / duration || 0 }}"
-	            v-on="click: seek($event)">
-	            {{ currentTime / duration }}
-	          </progress>
-	        </div>
-	    </div>
-	  <div class="track" v-repeat="t : tracks" v-class="player.currentTrack == t ? 'current' : ''">
-	    <a href="#" class="block p1 nav-item"
-	      v-on="click: playPause($index)">
-	      <span class="mr1">{{ $index }}.</span>
-	      {{ t.user.username }} - {{ t.title }}
-	    </a>
-	  </div>
-	</div>-->
-
-
-
 </div>
 
-
-
-<!--<script src="http://connect.soundcloud.com/sdk.js"></script>
-<script>
-SC.initialize({
-  client_id: 'e5f4f09d2b341a90da3eee85d92aa2b9'
-});
-
-// stream track id 293
-SC.stream("/tracks/169341729&amp;allow_redirects=False", function(sound){
-	sound.play();
-  console.log(sound);
-  console.log('bla');
-});
-</script>-->
-
-
 <script src="http://code.jquery.com/jquery-1.7.2.js"></script>
-
 <script>
 
 var url = 'https://api.soundcloud.com/users/57460460/playlists.json?client_id=e5f4f09d2b341a90da3eee85d92aa2b9';
@@ -206,20 +92,6 @@ var playlistsJSON = {
   }
 };
 
-/*$.getJSON(url, function(playlists) {
-	//console.log(playlists[0].duration);
-  $( playlists ).each( function( key , playlist ) {
-console.log( playlist.permalink_url );
-  		items.push( playlist.permalink_url ) ;
-  		tag_list.push( playlist.tag_list );
-  		//console.log( items );
-	  	//$( playlist['tracks'] ).each( function( key , track ) {
-	  		//console.log(track);
-	  	//});
-
-  });
-});*/
-
 playlistsJSON.getPlaylists().done(function( playlists ) {
   var vm = new Vue({ 
 	el: 'body',
@@ -229,30 +101,6 @@ playlistsJSON.getPlaylists().done(function( playlists ) {
  });
 });
 
-
-/*var listOfObjects = [];
-var a = ["car", "bike", "scooter"];
-items.forEach(function(entry) {
-	console.log(entry);
-    var singleObj = {};
-    singleObj['url'] = entry;
-    singleObj['tag'] = 'montag';
-    listOfObjects.push(singleObj);
-});
-
-console.log(listOfObjects);*/
-
-//console.log(tab);
-/*var vm = new Vue({ 
-	el: '#vm',
-	data: {
- 	   tags: items,
- 	   listtags: tag_list
-  	}
- });*/
 </script>
-
-
-
 </body>
 </html>
