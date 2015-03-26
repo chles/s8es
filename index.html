@@ -76,11 +76,6 @@ var url = 'https://api.soundcloud.com/users/57460460/playlists.json?client_id=e5
 var items = [];
 var tag_list = [];
 
-var ob = [
-      { name: 'Foo Bar', email: 'foo@bar.com' },
-      { name: 'John Doh', email: 'john@doh.com' }
-    ];
-
 var playlistsJSON = {
   getPlaylists: function() {
     return $.getJSON(url).then(function(playlists) {
