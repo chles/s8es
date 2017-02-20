@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>S8ES SOUND - Playlists from soundcloud</title>
+  <link rel="stylesheet" href="suitessound.css">
+
+  <link href='http://fonts.googleapis.com/css?family=Raleway:400,100,700' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Playball' rel='stylesheet' type='text/css'>
+
+ 	<script src="angularv1_3_15.js"></script>
+  <script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.0.js"></script>
+  <script src="https://code.angularjs.org/1.3.15/angular-route.min.js"></script>
+  
+  <!-- Firebase -->
+  <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
+  <script src="https://cdn.firebase.com/libs/angularfire/1.0.0/angularfire.min.js"></script>
+
+  <script src="plangular-v2.js"></script>
+  <script src="app.js"></script>
+
+</head>
+<body ng-app="app">
+
+  <section class="container line">
+    <section class='side-left line line-fdc line-jcsb'>
+
+      <header>
+        <h1><a href="#/" title="S8ES SOUND">S8ES SOUND</a></h1>
+        <h2>Like tracks, make playlists.</h2>
+        <p class="mention">Version bêta.<!--Plus d'infos sur <a href="lab.s8es.fr" title="S8ES LAB">lab.s8es.fr</a>--></p>
+      </header>
+
+
+      <section ng-controller="AuthCtrl" ng-if="!isLog">
+        <a class="btn" ng-click="login()">Authentification</a>
+        <a class="btn" ng-click="signup()">Créer un compte</a>
+      </section>
+
+      <section ng-if="isLog" class="section-login">
+      
+        <p class="span-user">{{displayName}}</p>
+        <p>Votre playlist <a href="#/{{displayName}}/favorites" class="">ici</a>.</p>
+        <a ng-click="logout()" class="span-xsmall">Déconnexion</a>
+
+      </section>
+
+      <footer class='line line-bacenter'>
+          <a id="soundcloud" href="https://soundcloud.com/s8es" target="_blank" alt="All song are provide by soundcloud"></a>
+      </footer>
+    </section>
+
+    <section class="side-right">
+
+        <div ng-view></div>
+
+    </section>
+    
+  </section>
+
+
+
+  <script type="text/ng-template" id="signup.html">
+    <div class="modal-header">
+      <span class="modal-close" ng-click="close()">
+        <svg class="svg-icon svg-icon-modal" viewBox="0 0 20 20">
+                <path d="M15.898,4.045c-0.271-0.272-0.713-0.272-0.986,0l-4.71,4.711L5.493,4.045c-0.272-0.272-0.714-0.272-0.986,0s-0.272,0.714,0,0.986l4.709,4.711l-4.71,4.711c-0.272,0.271-0.272,0.713,0,0.986c0.136,0.136,0.314,0.203,0.492,0.203c0.179,0,0.357-0.067,0.493-0.203l4.711-4.711l4.71,4.711c0.137,0.136,0.314,0.203,0.494,0.203c0.178,0,0.355-0.067,0.492-0.203c0.273-0.273,0.273-0.715,0-0.986l-4.711-4.711l4.711-4.711C16.172,4.759,16.172,4.317,15.898,4.045z"></path>
+        </svg>
+      </span>
+      <h3 class="modal-title">Créer un compte</h3>
+    </div>
+    <div class="modal-body">
+      <label class="item item-input">
+                <span class="input-label">Mail</span>
+                <input ng-model="user.email" type="text">
+      </label>
+      <label class="item item-input">
+                <span class="input-label">Mot de passe</span>
+                <input ng-model="user.password" type="password">
+      </label>
+      <label class="item item-input">
+                <span class="input-label">Pseudo</span>
+                <input ng-model="user.displayname" type="text">
+      </label>
+      <button class="btn btn-modal" ng-click="createUser(user)">Créer</button>
+    </div>
+  </script>
+
+  <script type="text/ng-template" id="signin.html">
+    <div class="modal-header">
+      <span class="modal-close" ng-click="close()">
+        <svg class="svg-icon svg-icon-modal" viewBox="0 0 20 20">
+                <path d="M15.898,4.045c-0.271-0.272-0.713-0.272-0.986,0l-4.71,4.711L5.493,4.045c-0.272-0.272-0.714-0.272-0.986,0s-0.272,0.714,0,0.986l4.709,4.711l-4.71,4.711c-0.272,0.271-0.272,0.713,0,0.986c0.136,0.136,0.314,0.203,0.492,0.203c0.179,0,0.357-0.067,0.493-0.203l4.711-4.711l4.71,4.711c0.137,0.136,0.314,0.203,0.494,0.203c0.178,0,0.355-0.067,0.492-0.203c0.273-0.273,0.273-0.715,0-0.986l-4.711-4.711l4.711-4.711C16.172,4.759,16.172,4.317,15.898,4.045z"></path>
+        </svg>
+      </span>
+      <h3 class="modal-title">Authentification</h3>
+    </div>
+    <div class="modal-body">
+      <form ng-controller="AuthCtrl" id="auth">
+        <label class="item item-input">
+            <span class="input-label">Email Address</span>
+            <input type="email" ng-model="user.email" />
+        </label>
+        <label class="item item-input">
+            <span class="input-label">Password</span>
+            <input type="password" ng-model="user.pwdForLogin" />
+        </label>
+        <button type="submit" class="btn btn-modal" ng-click="connect(user)">Me connecter</button>
+      </form>
+    </div>
+  </script>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64335417-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>
